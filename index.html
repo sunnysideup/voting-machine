@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Who to vote for in New Zealand Elections</title>
+
+<style>
+html,body {padding:0;margin:0;}
+.wrap {
+  font:12px Arial, sans-serif;
+}
+h1, p {
+    text-align: center;
+}
+h1.likert-header {
+  padding-left:4.25%;
+  margin:20px 0 0;
+}
+ul, li {
+    padding: 0!important;
+    margin: 0!important;
+}
+form .statement {
+  display:block;
+  font-size: 14px;
+  font-weight: bold;
+  padding-top: 70px;
+  text-align: center;
+  text-decoration: underline;
+  margin-bottom:10px;
+  clear: both;
+}
+form ul {
+    clear: both;
+}
+form .likert {
+  list-style:none;
+  width: 100%;
+  margin:0;
+  padding:0;
+  padding-top: 10px!important;
+  display:block;
+  position: relative;
+  height: 27px;
+  background-color: #eee;
+  overflow: visible;
+}
+
+form .likert li {
+  display:block;
+  width: calc(40% / 5);
+  text-align:center;
+  vertical-align: top;
+  float: left;
+}
+form .likert li input[type=radio] {
+  display:block;
+  position:relative;
+  top:0;
+  left:50%;
+  margin-left:-6px;
+
+}
+form .likert li label {width:100%;}
+
+form .buttons {
+  margin:30px 0;
+  padding:0 4.25%;
+  text-align: center;
+}
+form .buttons button {
+  padding: 5px 10px;
+  background-color: #67ab49;
+  border: 0;
+  border-radius: 3px;
+}
+form .buttons .clear {background-color: #e9e9e9;}
+form .buttons .submit {background-color: #67ab49;}
+form .buttons .clear:hover {background-color: #ccc;}
+form .buttons .submit:hover {background-color: #14892c;}
+
+form li.a,
+form li.b {
+    width: 30%;
+}
+form li.a {
+    text-align: right
+}
+form li.b {
+    text-align: left;
+}
+</style>
+
+</head>
+
+<body>
+
+
+    <div class="wrap">
+      <h1>Wonder who to vote for in New Zealand Elections?</h1>
+      <p class="likert-header">Please make choices below to find out what party is best suited to you ... </p>
+      <form action="">
+          <div id="questions"></div>
+          <div class="buttons">
+          <button class="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+
+
+<script>
+
+
+
+
+/**************************************************
+ * FX: RETRIEVE GET VARS
+ **************************************************/
+
+function getVars()
+{
+    var $_GET = {};
+    if(document.location.toString().indexOf('?') !== -1) {
+        var query = document.location
+                       .toString()
+                       // get the query string
+                       .replace(/^.*?\?/, '')
+                       // and remove any existing hash string (thanks, @vrijdenker)
+                       .replace(/#.*$/, '')
+                       .split('&');
+
+        for(var i=0, l=query.length; i<l; i++) {
+           var aux = decodeURIComponent(query[i]).split('=');
+           //note the parse int !
+           $_GET[parseInt(aux[0])] = parseInt(aux[1]);
+        }
+    }
+    //get the 'index' query parameter
+    return $_GET;
+}
+
+/**************************************************
+ * FX: WORK OUT OBJECT SIZE
+ **************************************************/
+
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+
+
+/**************************************************
+ * DEFINE QUESTIONS
+ **************************************************/
+var questions = {
+    1: {
+        start: 'i vote for the party that',
+        a: 'best represents me',
+        b: 'looks after most vulnerable',
+        partyAnswers: {
+            'act': '-2',
+            'nzf': '-1',
+            'nat': '-1',
+            'lab': '1',
+            'gre': '2',
+            'top': '1',
+            'mao': '1'
+        }
+    },
+    2: {
+        start: 'the government should',
+        a: 'prepare for the future',
+        b: 'take advantage of today\'s opportunities',
+        partyAnswers: {
+            'act': '2',
+            'nzf': '2',
+            'nat': '1',
+            'lab': '-1',
+            'gre': '-2',
+            'top': '-2',
+            'mao': '1'
+        }
+    },
+    3: {
+        start: 'the success of the government is measured in',
+        a: 'the strength of the economy',
+        b: 'fairness and diversity of society',
+        partyAnswers: {
+            'act': '-2',
+            'nzf': '-1',
+            'nat': '-2',
+            'lab': '1',
+            'gre': '2',
+            'top': '-1',
+            'mao': '1'
+        }
+    },
+    4: {
+        start: 'the more the government gets involved the',
+        a: 'better things get',
+        b: 'worse things get',
+        partyAnswers: {
+            'act': '2',
+            'nzf': '-1',
+            'nat': '1',
+            'lab': '-1',
+            'gre': '-2',
+            'top': '1',
+            'mao': '-1'
+        }
+    },
+    5: {
+        start: 'I vote for the best',
+        a: 'policies',
+        a: 'people',
+        partyAnswers: {
+            'act': '-2',
+            'nzf': '2',
+            'nat': '-1',
+            'lab': '-1',
+            'gre': '-2',
+            'top': '-2',
+            'mao': '1'
+        }
+    },
+    6: {
+        start: 'the government should acknowledge history and tradition',
+        a: 'mostly',
+        b: 'rarely',
+        partyAnswers: {
+            'act': '2',
+            'nzf': '-2',
+            'nat': '-2',
+            'lab': '1',
+            'gre': '2',
+            'top': '2',
+            'mao': '-1'
+        }
+    },
+    7: {
+        start: 'the government should mostly provide',
+        a: 'rules',
+        b: 'services',
+        partyAnswers: {
+            'act': '-2',
+            'nzf': '1',
+            'nat': '-1',
+            'lab': '1',
+            'gre': '2',
+            'top': '1',
+            'mao': '1'
+        }
+    }
+};
+
+/**************************************************
+ * VARIABLES
+ **************************************************/
+
+var answers = getVars();
+var html = '';
+var partyAnswers = '';
+var answer = '';
+var key = '';
+var i = 0;
+var myScore = {
+    'act': 0,
+    'gre': 0,
+    'lab': 0,
+    'mao': 0,
+    'nat': 0,
+    'nzf': 0,
+    'top': 0
+};
+var partyNames = {
+    'act': 'ACT',
+    'gre': 'Greens',
+    'lab': 'Labour Party',
+    'mao': 'Maori Party',
+    'nat': 'National Party',
+    'nzf': 'New Zealand First',
+    'top': 'The Opportunities Party'
+};
+
+
+/**************************************************
+ * SET VARIABLES
+ **************************************************/
+
+//loop through questions
+for (var key in questions) {
+    if (!questions.hasOwnProperty(key)) continue;
+    console.debug('-------------------------');
+    //loop through options
+    answer = false;
+    if(typeof answers[key] === 'number') {
+        answer = parseInt(answers[key]);
+    }
+    var partyAnswers = questions[key]['partyAnswers'];
+    console.debug('QUESTION: '+key+ ', '+'ANSWER: '+answer);
+    console.debug(partyAnswers);
+    for(i = -2; i < 3; i++){
+
+        //set party allocations to show in table .... DEFAULT ONLY
+        if(typeof questions[key]['party_allocation'] === 'undefined') {
+            questions[key]['party_allocation'] = {};
+        }
+        questions[key]['party_allocation'][i] = '';
+
+        //which checkboxes are already set ...  DEFAULT ONLY
+        if(typeof questions[key]['checked'] === 'undefined') {
+            questions[key]['checked'] = {};
+        }
+        questions[key]['checked'][i] = '';
+
+        // for each answer that has been answered ...
+        if(answer === false) {
+            // console.debug('there is no answer ....');
+        } else {
+            // console.debug('there is an answer ....');
+            //set party allocations to show in table ....
+
+
+            //loop through party answers to see which ones match
+            for (var party in partyAnswers) {
+                if (!partyAnswers.hasOwnProperty(key)) continue;
+                partyAnswer = parseInt(partyAnswers[party]);
+                if(partyAnswer === i) {
+                    questions[key]['party_allocation'][i] += '<span class="party-answer">' + party + '</span>';
+                    console.debug('party answer '+partyAnswer+' matches with i: '+i);
+                } else {
+                    console.debug('party answer '+partyAnswer+' does not match with i: '+i);
+                }
+
+                //add to scoring
+                myScore[party] += Math.abs(answer - partyAnswer);
+            }
+
+            //which checkboxes are already set ...  \
+            if(answer === i) {
+                questions[key]['checked'][i] = ' checked="checked"';
+                console.debug('answer '+i+' matches with answer given '+answer);
+            } else {
+                console.debug('answer '+i+' does not match with answer given '+answer);
+            }
+        }
+    }
+}
+
+/**************************************************
+ * WORK OUT SCORE ...
+ **************************************************/
+
+if(Object.size(answers) > 0) {
+
+    var html = `
+        <div class="results">
+        <h2>Results</h2>
+        <table>
+            <thead>
+                <tr><th scope="col">party</th><th scope="col">percentage of agreement with your values</th></tr>
+            </thead>
+            <tbody>`;
+    var maxScore = Object.size(questions) * 5;
+    for (var party in myScore) {
+        // skip loop if the property is from prototype
+        if (!myScore.hasOwnProperty(party)) continue;
+        var partyScoreDifference = myScore[party];
+        var partyScorePercentage = Math.round(((maxScore - partyScoreDifference) / maxScore) * 100);
+        html += '<tr><th class="party-name" scope="row">' + partyNames[party] + ' ('+party+')</td><td width="'+partyScorePercentage+'">&nbsp;</td></tr>';
+    }
+    html += '</tbody></table></div>';
+}
+for (var key in questions) {
+    // skip loop if the property is from prototype
+    if (!questions.hasOwnProperty(key)) continue;
+
+    var obj = questions[key];
+    console.debug(obj);
+    html += `
+    <label class="statement">`+obj['start']+` …</label>
+    <ul class="likert">
+        <li class="a">`+obj['a']+`</li>
+        <li>
+            <input type="radio" name="`+key+`" value="-2" `+obj['checked'][-2]+`>
+             `+obj['party_allocation'][-2]+`
+        </li>
+        <li>
+            <input type="radio" name="`+key+`" value="-1" `+obj['checked'][-1]+`>
+            `+obj['party_allocation'][-1]+`
+        </li>
+        <li>
+            <input type="radio" name="`+key+`" value="0" `+obj['checked'][0]+`>
+            `+obj['party_allocation'][0]+`
+        </li>
+        <li>
+            <input type="radio" name="`+key+`" value="1" `+obj['checked'][1]+`>
+            `+obj['party_allocation'][1]+`
+        </li>
+        <li>
+            <input type="radio" name="`+key+`" value="2" `+obj['checked'][2]+`>
+            `+obj['party_allocation'][2]+`
+        </li>
+        <li class="b">`+obj['b']+`</li>
+    </ul>
+    `
+}
+
+document.getElementById('questions').innerHTML = html;
+
+
+
+
+</script>
+</body>
+
+</html>
