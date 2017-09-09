@@ -13,8 +13,6 @@ h1, p {
     text-align: center;
 }
 h1.likert-header {
-  padding-left:4.25%;
-  margin:20px 0 0;
 }
 ul, li {
     padding: 0!important;
@@ -41,7 +39,7 @@ form .likert {
   padding-top: 10px!important;
   display:block;
   position: relative;
-  height: 27px;
+  height: 77px;
   background-color: #eee;
   overflow: visible;
 }
@@ -64,9 +62,9 @@ form .likert li input[type=radio] {
 form .likert li label {width:100%;}
 
 form .buttons {
-  margin:30px 0;
-  padding:0 4.25%;
+  padding: 30px;;
   text-align: center;
+  clear: both;
 }
 form .buttons button {
   padding: 5px 10px;
@@ -89,6 +87,32 @@ form li.a {
 form li.b {
     text-align: left;
 }
+th[scope='row'] {
+    text-align: right;
+    font-weight: normal
+}
+.percentage-bar div {
+    background-color: purple;
+}
+
+.party-answer {
+    display: block;
+    color: #999;
+}
+
+table {
+    width: 40%;
+    min-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border: border-collapse;
+}
+td, th {
+    background-color: #eee;
+    padding: 5px;
+    border: 0px solid transparent;
+}
+
 </style>
 
 </head>
@@ -102,7 +126,7 @@ form li.b {
       <form action="">
           <div id="questions"></div>
           <div class="buttons">
-          <button class="submit">Submit</button>
+          <button class="submit">See results</button>
         </div>
       </form>
     </div>
@@ -216,7 +240,7 @@ var questions = {
     5: {
         start: 'I vote for the best',
         a: 'policies',
-        a: 'people',
+        b: 'people',
         partyAnswers: {
             'act': '-2',
             'nzf': '2',
@@ -262,6 +286,7 @@ var questions = {
  **************************************************/
 
 var answers = getVars();
+var answerCount = Object.size(answers);
 var html = '';
 var partyAnswers = '';
 var answer = '';
@@ -294,15 +319,15 @@ var partyNames = {
 //loop through questions
 for (var key in questions) {
     if (!questions.hasOwnProperty(key)) continue;
-    console.debug('-------------------------');
+    // console.debug('-------------------------');
     //loop through options
     answer = false;
     if(typeof answers[key] === 'number') {
         answer = parseInt(answers[key]);
     }
     var partyAnswers = questions[key]['partyAnswers'];
-    console.debug('QUESTION: '+key+ ', '+'ANSWER: '+answer);
-    console.debug(partyAnswers);
+    // console.debug('QUESTION: '+key+ ', '+'ANSWER: '+answer);
+    // console.debug(partyAnswers);
     for(i = -2; i < 3; i++){
 
         //set party allocations to show in table .... DEFAULT ONLY
@@ -327,25 +352,27 @@ for (var key in questions) {
 
             //loop through party answers to see which ones match
             for (var party in partyAnswers) {
-                if (!partyAnswers.hasOwnProperty(key)) continue;
+                if (!partyAnswers.hasOwnProperty(party)) continue;
                 partyAnswer = parseInt(partyAnswers[party]);
                 if(partyAnswer === i) {
                     questions[key]['party_allocation'][i] += '<span class="party-answer">' + party + '</span>';
-                    console.debug('party answer '+partyAnswer+' matches with i: '+i);
+                    console.debug('party answer '+partyAnswer+' for '+party+' matches with i: '+i);
                 } else {
                     console.debug('party answer '+partyAnswer+' does not match with i: '+i);
                 }
 
                 //add to scoring
+                partyScore = Math.abs(answer - partyAnswer);
+                console.debug('Adding '+ partyScore + ' to '+party);
                 myScore[party] += Math.abs(answer - partyAnswer);
             }
 
             //which checkboxes are already set ...  \
             if(answer === i) {
                 questions[key]['checked'][i] = ' checked="checked"';
-                console.debug('answer '+i+' matches with answer given '+answer);
+                // console.debug('answer '+i+' matches with answer given '+answer);
             } else {
-                console.debug('answer '+i+' does not match with answer given '+answer);
+                // console.debug('answer '+i+' does not match with answer given '+answer);
             }
         }
     }
@@ -354,7 +381,6 @@ for (var key in questions) {
 /**************************************************
  * WORK OUT SCORE ...
  **************************************************/
-
 if(Object.size(answers) > 0) {
 
     var html = `
@@ -365,13 +391,15 @@ if(Object.size(answers) > 0) {
                 <tr><th scope="col">party</th><th scope="col">percentage of agreement with your values</th></tr>
             </thead>
             <tbody>`;
-    var maxScore = Object.size(questions) * 5;
+    var maxScore = answerCount * 5 * 5;
+    // console.debug(myScore);
+    // console.debug(maxScore);
     for (var party in myScore) {
         // skip loop if the property is from prototype
         if (!myScore.hasOwnProperty(party)) continue;
         var partyScoreDifference = myScore[party];
         var partyScorePercentage = Math.round(((maxScore - partyScoreDifference) / maxScore) * 100);
-        html += '<tr><th class="party-name" scope="row">' + partyNames[party] + ' ('+party+')</td><td width="'+partyScorePercentage+'">&nbsp;</td></tr>';
+        html += '<tr><th class="party-name" scope="row">' + partyNames[party] + ' ('+party+')</td><td class="percentage-bar"><div style="width: '+partyScorePercentage+'%;">&nbsp;</div></td></tr>';
     }
     html += '</tbody></table></div>';
 }
@@ -380,7 +408,7 @@ for (var key in questions) {
     if (!questions.hasOwnProperty(key)) continue;
 
     var obj = questions[key];
-    console.debug(obj);
+    // console.debug(obj);
     html += `
     <label class="statement">`+obj['start']+` …</label>
     <ul class="likert">
