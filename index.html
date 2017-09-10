@@ -2,15 +2,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Who to vote for in New Zealand Elections</title>
-
+<title>Who to vote for in New Zealand Elections?</title>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 html,body {padding:0;margin:0;}
 .wrap {
-  font:12px Arial, sans-serif;
+  font-size: 14px;
+  font-family: 'Source Sans Pro', arial, verdana, helvetica, sans-serif;
+  font-weight: 300;
 }
-h1, p {
+h1 {
+    padding-top: 3em;
+    color: purple;
+}
+h1, h2, p {
     text-align: center;
+    font-weight: 300;
+    max-width: 450px;
+    margin-left: auto;
+    margin-right: auto;
 }
 h1.likert-header {
 }
@@ -20,11 +31,10 @@ ul, li {
 }
 form .statement {
   display:block;
-  font-size: 14px;
-  font-weight: bold;
+  font-weight: 700;
   padding-top: 70px;
   text-align: center;
-  text-decoration: underline;
+  color: purple;
   margin-bottom:10px;
   clear: both;
 }
@@ -39,10 +49,19 @@ form .likert {
   padding-top: 10px!important;
   display:block;
   position: relative;
-  height: 77px;
+  height: auto;
   background-color: #eee;
   overflow: visible;
+  min-height: 20px;
+  padding-bottom: 10px!important;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
+.likert:after {
+  content: "";
+  display: table;
+  clear: both;
+ }
 
 form .likert li {
   display:block;
@@ -72,10 +91,46 @@ form .buttons button {
   border: 0;
   border-radius: 3px;
 }
-form .buttons .clear {background-color: #e9e9e9;}
-form .buttons .submit {background-color: #67ab49;}
-form .buttons .clear:hover {background-color: #ccc;}
-form .buttons .submit:hover {background-color: #14892c;}
+form .buttons .submit  {
+    -moz-box-shadow: 0px 10px 14px -7px #3e7327;
+    -webkit-box-shadow: 0px 10px 14px -7px #3e7327;
+    box-shadow: 0px 10px 14px -7px #3e7327;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77b55a), color-stop(1, #72b352));
+    background:-moz-linear-gradient(top, #77b55a 5%, #72b352 100%);
+    background:-webkit-linear-gradient(top, #77b55a 5%, #72b352 100%);
+    background:-o-linear-gradient(top, #77b55a 5%, #72b352 100%);
+    background:-ms-linear-gradient(top, #77b55a 5%, #72b352 100%);
+    background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77b55a', endColorstr='#72b352',GradientType=0);
+    background-color:#77b55a;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+    border:1px solid #4b8f29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:16px;
+    font-weight:bold;
+    padding:13px 28px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #5b8a3c;
+}
+form .buttons .submit:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #72b352), color-stop(1, #77b55a));
+    background:-moz-linear-gradient(top, #72b352 5%, #77b55a 100%);
+    background:-webkit-linear-gradient(top, #72b352 5%, #77b55a 100%);
+    background:-o-linear-gradient(top, #72b352 5%, #77b55a 100%);
+    background:-ms-linear-gradient(top, #72b352 5%, #77b55a 100%);
+    background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#72b352', endColorstr='#77b55a',GradientType=0);
+    background-color:#72b352;
+}
+form .buttons .submit:active {
+    position:relative;
+    top:1px;
+}
 
 form li.a,
 form li.b {
@@ -93,6 +148,9 @@ th[scope='row'] {
 }
 .percentage-bar div {
     background-color: purple;
+    overflow: hidden;
+    color: #fff;
+    text-indent: 0.5em;
 }
 
 .party-answer {
@@ -108,9 +166,17 @@ table {
     border: border-collapse;
 }
 td, th {
-    background-color: #eee;
     padding: 5px;
     border: 0px solid transparent;
+    border-top: 1px solid #ccc;
+}
+th[scope='col'] {
+    border-bottom: 1px solid #999;
+    border-top: 1px solid #999;
+}
+tbody tr:first-child th,
+tbody tr:first-child td {
+    border-top: none;
 }
 
 </style>
@@ -119,17 +185,21 @@ td, th {
 
 <body>
 
-
-    <div class="wrap">
-      <h1>Wonder who to vote for in New Zealand Elections?</h1>
-      <p class="likert-header">Please make choices below to find out what party is best suited to you ... </p>
-      <form action="">
-          <div id="questions"></div>
-          <div class="buttons">
-          <button class="submit">See results</button>
+<div class="wrap">
+    <div id="page-title"></div>
+    <form action="">
+        <div id="questions"></div>
+        <div class="buttons">
+            <button class="submit">Find your party ...</button>
         </div>
-      </form>
-    </div>
+    </form>
+    <h1>Frequently Asked Questions</h1>
+    <p><a href="http://www.elections.org.nz/events/2017-general-election/">How to enrol and vote from within New Zealand</a></p>
+    <p><a href="http://www.elections.org.nz/events/2017-general-election/voting-2017-general-election/voting-overseas">How to enrol from overseas</a></p>
+    <p>Is not voting a no-confidence or protest vote? Answer: NO.  If you think the whole government / democracy thing sucks then stop paying taxes, otherwise nothing will ever change and you will never be cool.</p>
+    <h1>Author and Feedback</h1>
+    <p>This tool was developed by <a href="http://www.sunnysideup.co.nz">Sunny Side Up</a>.  Please contact us for any feedback.</p>
+</div>
 
 
 <script>
@@ -156,7 +226,8 @@ function getVars()
         for(var i=0, l=query.length; i<l; i++) {
            var aux = decodeURIComponent(query[i]).split('=');
            //note the parse int !
-           $_GET[parseInt(aux[0])] = parseInt(aux[1]);
+           var myKey = aux[0].replace(/\W/g, '')
+           $_GET[myKey] = parseInt(aux[1]);
         }
     }
     //get the 'index' query parameter
@@ -181,10 +252,10 @@ Object.size = function(obj) {
  * DEFINE QUESTIONS
  **************************************************/
 var questions = {
-    1: {
-        start: 'i vote for the party that',
+    mesvspoor: {
+        start: 'I vote for the party that',
         a: 'best represents me',
-        b: 'looks after most vulnerable',
+        b: 'looks after people who need it most',
         partyAnswers: {
             'act': '-2',
             'nzf': '-1',
@@ -195,7 +266,7 @@ var questions = {
             'mao': '1'
         }
     },
-    2: {
+    todayvsfuture: {
         start: 'the government should',
         a: 'prepare for the future',
         b: 'take advantage of today\'s opportunities',
@@ -209,10 +280,10 @@ var questions = {
             'mao': '1'
         }
     },
-    3: {
+    economyvsequity: {
         start: 'the success of the government is measured in',
         a: 'the strength of the economy',
-        b: 'fairness and diversity of society',
+        b: 'fairness of society',
         partyAnswers: {
             'act': '-2',
             'nzf': '-1',
@@ -223,7 +294,7 @@ var questions = {
             'mao': '1'
         }
     },
-    4: {
+    smallvslargegovt: {
         start: 'the more the government gets involved the',
         a: 'better things get',
         b: 'worse things get',
@@ -237,7 +308,7 @@ var questions = {
             'mao': '-1'
         }
     },
-    5: {
+    peepsvspolicies: {
         start: 'I vote for the best',
         a: 'policies',
         b: 'people',
@@ -251,27 +322,55 @@ var questions = {
             'mao': '1'
         }
     },
-    6: {
-        start: 'the government should acknowledge history and tradition',
-        a: 'mostly',
-        b: 'rarely',
+    traditionvschange: {
+        start: 'the Treaty of Waitingi is important to',
+        a: 'all laws',
+        b: 'some laws',
         partyAnswers: {
             'act': '2',
-            'nzf': '-2',
-            'nat': '-2',
-            'lab': '1',
-            'gre': '2',
-            'top': '2',
-            'mao': '-1'
+            'nzf': '1',
+            'nat': '0',
+            'lab': '-1',
+            'gre': '-1',
+            'top': '-1',
+            'mao': '-2'
         }
     },
-    7: {
+    rulesvsservices: {
         start: 'the government should mostly provide',
         a: 'rules',
         b: 'services',
         partyAnswers: {
             'act': '-2',
             'nzf': '1',
+            'nat': '-1',
+            'lab': '1',
+            'gre': '2',
+            'top': '1',
+            'mao': '1'
+        }
+    },
+    greedvsenviroment: {
+        start: 'the government should look after the environment',
+        a: 'more',
+        b: 'less',
+        partyAnswers: {
+            'act': '2',
+            'nzf': '1',
+            'nat': '1',
+            'lab': '-1',
+            'gre': '-2',
+            'top': '-2',
+            'mao': '0'
+        }
+    },
+    oldvsyoung: {
+        start: 'I mainly care about the needs of ',
+        a: 'old people',
+        b: 'young people',
+        partyAnswers: {
+            'act': '1',
+            'nzf': '-2',
             'nat': '-1',
             'lab': '1',
             'gre': '2',
@@ -305,7 +404,7 @@ var partyNames = {
     'act': 'ACT',
     'gre': 'Greens',
     'lab': 'Labour Party',
-    'mao': 'Maori Party',
+    'mao': 'Māori Party',
     'nat': 'National Party',
     'nzf': 'New Zealand First',
     'top': 'The Opportunities Party'
@@ -382,27 +481,39 @@ for (var key in questions) {
  * WORK OUT SCORE ...
  **************************************************/
 if(Object.size(answers) > 0) {
+    var mySortedScore = [];
+    for (var party in myScore) {
+        if (!myScore.hasOwnProperty(party)) continue;
+        mySortedScore.push([party, myScore[party]]);
+    }
 
+    mySortedScore.sort(function(a, b) {
+        return a[1] - b[1];
+    });
     var html = `
         <div class="results">
-        <h2>Results</h2>
+        <h1>Results</h1>
         <table>
             <thead>
-                <tr><th scope="col">party</th><th scope="col">percentage of agreement with your values</th></tr>
+                <tr><th scope="col">party</th><th scope="col">matches your values by …</th></tr>
             </thead>
             <tbody>`;
     var maxScore = answerCount * 5 * 5;
     // console.debug(myScore);
     // console.debug(maxScore);
-    for (var party in myScore) {
-        // skip loop if the property is from prototype
-        if (!myScore.hasOwnProperty(party)) continue;
-        var partyScoreDifference = myScore[party];
+    for (var i = 0; i < mySortedScore.length; i++) {
+        var party = mySortedScore[i][0];
+        var partyScoreDifference = mySortedScore[i][1];
         var partyScorePercentage = Math.round(((maxScore - partyScoreDifference) / maxScore) * 100);
-        html += '<tr><th class="party-name" scope="row">' + partyNames[party] + ' ('+party+')</td><td class="percentage-bar"><div style="width: '+partyScorePercentage+'%;">&nbsp;</div></td></tr>';
+        html += '<tr><th class="party-name" scope="row">' + partyNames[party] + ' ('+party+')</td><td class="percentage-bar"><div style="width: '+partyScorePercentage+'%;">'+partyScorePercentage+'%</div></td></tr>';
     }
     html += '</tbody></table></div>';
 }
+html += `
+    <h1>Wonder who to vote for<br />in the New Zealand Elections?</h1>
+    <p class="likert-header">Please make choices below to find out what party is best suited to you … </p>
+`;
+
 for (var key in questions) {
     // skip loop if the property is from prototype
     if (!questions.hasOwnProperty(key)) continue;
