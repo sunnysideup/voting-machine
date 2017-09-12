@@ -198,9 +198,10 @@ tbody tr:first-child td {
     <h1>Frequently Asked Questions</h1>
     <p><a href="http://www.elections.org.nz/events/2017-general-election/">How to enrol and vote from within New Zealand</a></p>
     <p><a href="http://www.elections.org.nz/events/2017-general-election/voting-2017-general-election/voting-overseas">How to enrol from overseas</a></p>
-    <p>Is not voting a no-confidence or protest vote? Can it ever be a cool way to give politicians the finger?
+    <p>Is not voting a cool way to give politicians the finger? Is not voting a way to say that you do not believe in the state, in power.
+        Is not voting a way to promote anarchism or a peaceful paradise?
         <br /><br />Answer: <strong>NO.</strong>
-        <br />If you think the whole government / democracy thing sucks then stop paying taxes, otherwise nothing will ever change and you will never be cool.</p>
+        <br />If you think the whole government / democracy thing sucks then stop paying taxes, set up your own country, start a commune in Brazil - or do something else that matters - otherwise nothing will ever change and you will never be cool.</p>
     <h1>Author and Feedback</h1>
     <p>This tool was developed by <a href="http://www.sunnysideup.co.nz">Sunny Side Up</a>.  Please contact us for any feedback.</p>
 </div>
@@ -256,6 +257,31 @@ Object.size = function(obj) {
  * DEFINE QUESTIONS
  **************************************************/
 var questions = {
+    // If I were to run the economy, I would primarily focus on ...
+    // global dairy prices
+    // investment in green technology
+    //
+    //
+    // old people
+    // young people
+    //
+    // If I were to be in charge, I would protect the environment
+    // more
+    // less
+    //
+    // To me, our government, its programs and taxes should be
+    // bigger
+    // smaller
+    //
+    // In terms of new ideas, and changes to the way we do things:
+    // slow and steady is good
+    // everything needs to be challenged
+    //
+    // We can solve more problems by
+    // listening better to people's fears
+    // using more research and evidence
+    //
+    //
     mesvspoor: {
         start: 'I vote for the party that',
         a: 'best represents me',
@@ -271,7 +297,7 @@ var questions = {
         }
     },
     todayvsfuture: {
-        start: 'the government should',
+        start: 'The government should',
         a: 'prepare for the future',
         b: 'take advantage of today\'s opportunities',
         partyAnswers: {
@@ -285,7 +311,7 @@ var questions = {
         }
     },
     economyvsequity: {
-        start: 'the success of the government is measured in',
+        start: 'The success of the government is measured in',
         a: 'the strength of the economy',
         b: 'the fairness of society',
         partyAnswers: {
@@ -299,7 +325,7 @@ var questions = {
         }
     },
     smallvslargegovt: {
-        start: 'the more the government gets involved the',
+        start: 'The more the government gets involved the',
         a: 'better things get',
         b: 'worse things get',
         partyAnswers: {
@@ -327,9 +353,9 @@ var questions = {
         }
     },
     traditionvschange: {
-        start: 'the Treaty of Waitingi is important to',
-        a: 'all laws',
-        b: 'some laws',
+        start: 'Te reo Māori in school should be',
+        a: 'part of the core curriculum',
+        b: 'optional only',
         partyAnswers: {
             'act': '2',
             'nzf': '1',
@@ -341,7 +367,7 @@ var questions = {
         }
     },
     rulesvsservices: {
-        start: 'the government should mostly provide',
+        start: 'The government should mostly provide',
         a: 'rules',
         b: 'services',
         partyAnswers: {
@@ -355,7 +381,7 @@ var questions = {
         }
     },
     greedvsenviroment: {
-        start: 'the government should look after the environment',
+        start: 'The government should look after the environment',
         a: 'more',
         b: 'less',
         partyAnswers: {
@@ -369,7 +395,7 @@ var questions = {
         }
     },
     oldvsyoung: {
-        start: 'I mainly care about the needs of ',
+        start: 'If I were prime minister, I would care more about',
         a: 'old people',
         b: 'young people',
         partyAnswers: {
@@ -380,6 +406,34 @@ var questions = {
             'gre': '2',
             'top': '1',
             'mao': '1'
+        }
+    },
+    steadyvschange: {
+        start: 'In terms of new ideas, and changes to the way we do things, I prefer',
+        a: 'slow and steady',
+        b: 'change and innovation',
+        partyAnswers: {
+            'act': '2',
+            'nzf': '-2',
+            'nat': '-1',
+            'lab': '1',
+            'gre': '1',
+            'top': '2',
+            'mao': '1'
+        }
+    },
+    wisdomvsresearch: {
+        start: 'We can solve more problems by listening better to people\'s'
+        a: 'fears and wisdom',
+        b: 'research and evidence',
+        partyAnswers: {
+            'act': '2',
+            'nzf': '-2',
+            'nat': '0',
+            'lab': '1',
+            'gre': '1',
+            'top': '2',
+            'mao': '0'
         }
     }
 };
